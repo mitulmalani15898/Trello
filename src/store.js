@@ -9,6 +9,8 @@ import state from './store/state'
 import team from './store/teamModule'
 import board from './store/boardModule'
 import user from './store/userModule'
+import list from './store/listModule'
+import card from './store/cardModule'
 
 Vue.use(Vuex)
 
@@ -19,7 +21,9 @@ export default new Vuex.Store({
   modules: {
     team,
     board,
-    user
+    user,
+    list,
+    card
   },
   mutations,
   state

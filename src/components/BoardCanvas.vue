@@ -1,14 +1,14 @@
 <template>
   <div class="boardCanvas">
     <div id="board">
-      <div class="list-wrapper">
+      <div v-for="list in boardLists" :key="list.id" class="list-wrapper">
         <div class="list">
-          <v-btn class="listButton">List Title</v-btn>
-          <v-layout class="card">
+          <v-btn class="listButton">{{ list.listName }}</v-btn>
+          <v-layout v-for="card in list.Cards" :key="card.id" class="card">
             <v-flex>
               <v-card class="mx-auto" style="border-radius:5px;" tile hover>
                 <v-card-title>
-                  <span>Card Name</span>
+                  <span>{{ card.cardName }}</span>
                 </v-card-title>
                 <v-card-text>"Turns out semicolon-less"</v-card-text>
               </v-card>
@@ -16,14 +16,15 @@
           </v-layout>
           <div class="text-xs-center">
             <v-menu
-              v-model="menuCard"
+              :value="menuCard === list.id ? true : false"
               :close-on-content-click="false"
+              :close-on-click="false"
               :nudge-width="40"
               origin="center center"
               transition="scale-transition"
             >
               <template v-slot:activator="{ on }">
-                <v-btn class="listButton" v-on="on">Add another card</v-btn>
+                <v-btn class="listButton" @click="cardDialog(list.id)">Add another card</v-btn>
               </template>
               <v-card>
                 <v-form ref="card" v-model="valid">
@@ -41,7 +42,12 @@
                   </v-container>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" flat :disabled="!valid" @click="addCard">Add Card</v-btn>
+                    <v-btn
+                      color="primary"
+                      flat
+                      :disabled="!valid"
+                      @click="addCard(list.id)"
+                    >Add Card</v-btn>
                     <v-btn color="primary" flat @click="resetCardPopup">Cancel</v-btn>
                   </v-card-actions>
                 </v-form>
@@ -102,19 +108,40 @@ export default {
       nameRules: [v => !!v || "Title is required"]
     };
   },
+  computed: {
+    selectedBoard() {
+      return this.$store.state.board.selectedBoard;
+    },
+    boardLists() {
+      return this.$store.state.board.selectedBoard.Lists;
+    }
+  },
   methods: {
     addList() {
       if (this.$refs.list.validate()) {
-        //
+        let boardId = this.selectedBoard.id;
+        this.$store.dispatch("list/postList", {
+          boardId,
+          listName: this.listName
+        });
+        this.resetListPopup();
       }
     },
-    addCard() {
-      if (this.$refs.card.validate()) {
-        //
-      }
+    addCard(listId) {
+      // if (this.$refs.card.validate()) {
+      let boardId = this.selectedBoard.id;
+      this.$store.dispatch("card/postCard", {
+        listId,
+        boardId,
+        cardName: this.cardName
+      });
+      this.menuCard = false;
+      // }
+    },
+    cardDialog(listId) {
+      this.menuCard = listId;
     },
     resetCardPopup() {
-      this.$refs.card.reset();
       this.menuCard = false;
     },
     resetListPopup() {
@@ -159,6 +186,7 @@ export default {
 .list {
   background-color: rgb(150, 175, 223);
   border-radius: 5px;
+  display: grid;
 }
 .listButton {
   margin-left: 11px;

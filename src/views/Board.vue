@@ -17,7 +17,7 @@ export default {
     BoardHeader,
     BoardCanvas
   },
-  created() {
+  beforeCreate() {
     this.$store.dispatch("board/getBoardById", this.$route.params.boardId);
     history.pushState(null, null, location.href);
     window.onpopstate = function() {
