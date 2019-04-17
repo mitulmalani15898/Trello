@@ -1,39 +1,80 @@
 <template>
   <div class="boardCanvas">
     <div id="board">
-      <div v-for="list in boardLists" :key="list.id" class="list-wrapper">
-        <div class="list">
-          <v-btn class="listButton">{{ list.listName }}</v-btn>
-          <v-layout v-for="card in list.Cards" :key="card.id" class="card">
-            <v-flex>
-              <v-card class="mx-auto" style="border-radius:5px;" tile hover>
-                <v-card-title>
-                  <span>{{ card.cardName }}</span>
-                </v-card-title>
-                <v-card-text>"Turns out semicolon-less"</v-card-text>
-              </v-card>
-            </v-flex>
-          </v-layout>
+      <draggable v-model="boardLists" @start="isDragging=true" @end="isDragging=false">
+        <div v-for="(list) in boardLists" :key="list.id" class="list-wrapper">
+          <div class="list">
+            <v-btn class="listButton">{{ list.listName }}</v-btn>
+            <draggable :v-model="list" @start="isDragging=true" @end="isDragging=false">
+              <v-layout v-for="card in list.Cards" :key="card.id" class="card">
+                <v-flex>
+                  <v-card class="mx-auto" style="border-radius:5px;" tile hover>
+                    <v-card-title>
+                      <span>{{ card.cardName }}</span>
+                    </v-card-title>
+                    <!-- <v-card-text>"Turns out semicolon-less"</v-card-text> -->
+                  </v-card>
+                </v-flex>
+              </v-layout>
+            </draggable>
+            <div class="text-xs-center">
+              <v-menu
+                :value="menuCard === list.id ? true : false"
+                :close-on-content-click="false"
+                :close-on-click="false"
+                :nudge-width="40"
+                origin="center center"
+                transition="scale-transition"
+              >
+                <template v-slot:activator="{ on }">
+                  <v-btn class="listButton" @click="menuCard = list.id;">Add another card</v-btn>
+                </template>
+                <v-card>
+                  <v-form ref="card" v-model="valid">
+                    <v-container grid-list-md>
+                      <v-layout row wrap>
+                        <v-flex>
+                          <v-text-field label="Card Title" v-model="cardName" outline></v-text-field>
+                        </v-flex>
+                      </v-layout>
+                    </v-container>
+                    <v-card-actions>
+                      <v-spacer></v-spacer>
+                      <v-btn
+                        color="primary"
+                        flat
+                        :disabled="!cardName"
+                        @click.prevent="addCard(list.id)"
+                      >Add Card</v-btn>
+                      <v-btn color="primary" flat @click="resetCardPopup">Cancel</v-btn>
+                    </v-card-actions>
+                  </v-form>
+                </v-card>
+              </v-menu>
+            </div>
+          </div>
+        </div>
+
+        <div class="list-wrapper">
           <div class="text-xs-center">
             <v-menu
-              :value="menuCard === list.id ? true : false"
+              v-model="menuList"
               :close-on-content-click="false"
-              :close-on-click="false"
               :nudge-width="40"
               origin="center center"
               transition="scale-transition"
             >
               <template v-slot:activator="{ on }">
-                <v-btn class="listButton" @click="cardDialog(list.id)">Add another card</v-btn>
+                <v-btn class="addListButton" color="#6a8bcc" dark v-on="on">Add another list</v-btn>
               </template>
               <v-card>
-                <v-form ref="card" v-model="valid">
+                <v-form ref="list" v-model="valid">
                   <v-container grid-list-md>
                     <v-layout row wrap>
                       <v-flex>
                         <v-text-field
-                          label="Card Title"
-                          v-model="cardName"
+                          label="List Title"
+                          v-model="listName"
                           :rules="nameRules"
                           outline
                         ></v-text-field>
@@ -42,61 +83,22 @@
                   </v-container>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn
-                      color="primary"
-                      flat
-                      :disabled="!valid"
-                      @click="addCard(list.id)"
-                    >Add Card</v-btn>
-                    <v-btn color="primary" flat @click="resetCardPopup">Cancel</v-btn>
+                    <v-btn color="primary" flat :disabled="!valid" @click.prevent="addList">Add List</v-btn>
+                    <v-btn color="primary" flat @click="resetListPopup">Cancel</v-btn>
                   </v-card-actions>
                 </v-form>
               </v-card>
             </v-menu>
           </div>
         </div>
-      </div>
-      <div class="list-wrapper">
-        <div class="text-xs-center">
-          <v-menu
-            v-model="menuList"
-            :close-on-content-click="false"
-            :nudge-width="40"
-            origin="center center"
-            transition="scale-transition"
-          >
-            <template v-slot:activator="{ on }">
-              <v-btn class="addListButton" color="#6a8bcc" dark v-on="on">Add another list</v-btn>
-            </template>
-            <v-card>
-              <v-form ref="list" v-model="valid">
-                <v-container grid-list-md>
-                  <v-layout row wrap>
-                    <v-flex>
-                      <v-text-field
-                        label="List Title"
-                        v-model="listName"
-                        :rules="nameRules"
-                        outline
-                      ></v-text-field>
-                    </v-flex>
-                  </v-layout>
-                </v-container>
-                <v-card-actions>
-                  <v-spacer></v-spacer>
-                  <v-btn color="primary" flat :disabled="!valid" @click="addList">Add List</v-btn>
-                  <v-btn color="primary" flat @click="resetListPopup">Cancel</v-btn>
-                </v-card-actions>
-              </v-form>
-            </v-card>
-          </v-menu>
-        </div>
-      </div>
+      </draggable>
     </div>
   </div>
 </template>
 
 <script>
+import draggable from "vuedraggable";
+
 export default {
   data() {
     return {
@@ -105,15 +107,36 @@ export default {
       menuCard: false,
       listName: "",
       cardName: "",
-      nameRules: [v => !!v || "Title is required"]
+      nameRules: [v => !!v || "Title is required"],
+      isDragging: false,
+      delayedDragging: false
     };
+  },
+  components: {
+    draggable
   },
   computed: {
     selectedBoard() {
       return this.$store.state.board.selectedBoard;
     },
-    boardLists() {
-      return this.$store.state.board.selectedBoard.Lists;
+    boardLists: {
+      get: function() {
+        return this.$store.state.board.selectedBoard.Lists;
+      },
+      set: function(val) {
+        this.$store.commit("board/setLists", val);
+      }
+    }
+  },
+  watch: {
+    isDragging(newValue) {
+      if (newValue) {
+        this.delayedDragging = true;
+        return;
+      }
+      this.$nextTick(() => {
+        this.delayedDragging = false;
+      });
     }
   },
   methods: {
@@ -128,20 +151,17 @@ export default {
       }
     },
     addCard(listId) {
-      // if (this.$refs.card.validate()) {
       let boardId = this.selectedBoard.id;
       this.$store.dispatch("card/postCard", {
         listId,
         boardId,
         cardName: this.cardName
       });
+      this.cardName = "";
       this.menuCard = false;
-      // }
-    },
-    cardDialog(listId) {
-      this.menuCard = listId;
     },
     resetCardPopup() {
+      this.cardName = "";
       this.menuCard = false;
     },
     resetListPopup() {

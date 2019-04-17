@@ -70,7 +70,7 @@ export default {
     createBoard() {
       if (this.$refs.form.validate()) {
         const userId = localStorage.getItem("userId");
-        const teamId = this.team === "No Team" ? 0 : this.team;
+        const teamId = this.team === "No Team" ? 1 : this.team;
         const scope = this.boardScope === "Private" ? 1 : 0;
         let board = {
           userId,

@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-toolbar dark class="toolbar">
-      <v-btn icon class="btnBoard">
+      <v-btn icon class="btnBoard" @click="redirectToDashboard">
         <v-icon>mdi-home</v-icon>
       </v-btn>
       <v-btn flat class="btnBoard" @click="redirectToDashboard">
@@ -18,12 +18,12 @@
           </template>
           <v-list>
             <v-list-tile>
-              <v-list-tile>
+              <v-list-tile @click="boardDialog = !boardDialog">
                 <v-list-tile-title>Create Board</v-list-tile-title>
               </v-list-tile>
             </v-list-tile>
             <v-list-tile>
-              <v-list-tile>
+              <v-list-tile @click="teamDialog = !teamDialog">
                 <v-list-tile-title>Create Team</v-list-tile-title>
               </v-list-tile>
             </v-list-tile>
@@ -51,17 +51,33 @@
         </v-menu>
       </v-btn>
     </v-toolbar>
+    <AddBoard :dialog="boardDialog" v-on:updateBoardDialog="updateBoardDialog"/>
+    <AddTeam :dialog="teamDialog" @updateTeamDialog="updateTeamDialog"/>
   </div>
 </template>
 
 <script>
+import AddBoard from "./AddBoard.vue";
+import AddTeam from "./AddTeam.vue";
+
 export default {
   data() {
     return {
-      //
+      boardDialog: false,
+      teamDialog: false
     };
   },
+  components: {
+    AddBoard,
+    AddTeam
+  },
   methods: {
+    updateBoardDialog(val) {
+      this.boardDialog = val;
+    },
+    updateTeamDialog(val) {
+      this.teamDialog = val;
+    },
     logOut() {
       this.$store.dispatch("logOut");
     },

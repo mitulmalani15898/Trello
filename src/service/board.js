@@ -6,5 +6,8 @@ export default {
   },
   getBoardById(boardId) {
     return axios.get('api/board/' + boardId);
+  },
+  patchBoard(boardId, boardData) {
+    return axios.patch('api/board/' + boardId, boardData);
   }
 }
