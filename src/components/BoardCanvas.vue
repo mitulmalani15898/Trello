@@ -3,20 +3,53 @@
     <div id="board">
       <draggable v-model="boardLists" @start="isDragging=true" @end="isDragging=false">
         <div v-for="(list) in boardLists" :key="list.id" class="list-wrapper">
-          <div class="list">
-            <v-btn class="listButton">{{ list.listName }}</v-btn>
-            <draggable :v-model="list" @start="isDragging=true" @end="isDragging=false">
-              <v-layout v-for="card in list.Cards" :key="card.id" class="card">
-                <v-flex>
-                  <v-card class="mx-auto" style="border-radius:5px;" tile hover>
-                    <v-card-title>
-                      <span>{{ card.cardName }}</span>
-                    </v-card-title>
-                    <!-- <v-card-text>"Turns out semicolon-less"</v-card-text> -->
-                  </v-card>
-                </v-flex>
-              </v-layout>
-            </draggable>
+          <div class="list" @drop.stop @dragover.stop>
+            <v-text-field
+              style="padding-left:15px;padding-right:15px;"
+              v-if="listNameChangeId === list.id"
+              @keyup.enter="changeListName(list.id, list.listName)"
+              v-model="list.listName"
+            ></v-text-field>
+            <v-btn
+              v-else
+              class="listButton"
+              @drop.stop
+              @dragover.stop
+              @click="listNameChangeId = list.id"
+            >{{ list.listName }}</v-btn>
+
+            <div @drop.prevent="drop($event,list.id)" @dragover.prevent>
+              <div v-if="list.Cards.length != 0">
+                <draggable :v-model="list" @start="isDragging=true" @end="isDragging=false">
+                  <v-layout v-for="card in list.Cards" :key="card.id" class="card">
+                    <v-flex @drop.stop @dragover.stop>
+                      <v-card
+                        class="mx-auto"
+                        style="border-radius:5px;"
+                        tile
+                        hover
+                        draggable="true"
+                        @dragstart="drag($event)"
+                        @click="showCardModal(card.id)"
+                        :id="card.id.toString()"
+                      >
+                        <v-card-title @drop.stop @dragover.stop>
+                          <span>{{ card.cardName }}</span>
+                        </v-card-title>
+                        <!-- <v-card-text>"Turns out semicolon-less"</v-card-text> -->
+                      </v-card>
+                    </v-flex>
+                  </v-layout>
+                </draggable>
+              </div>
+              <div
+                style="height:10px;"
+                v-else
+                @drop.prevent="drop($event,list.id)"
+                @dragover.prevent
+              ></div>
+            </div>
+
             <div class="text-xs-center">
               <v-menu
                 :value="menuCard === list.id ? true : false"
@@ -27,10 +60,15 @@
                 transition="scale-transition"
               >
                 <template v-slot:activator="{ on }">
-                  <v-btn class="listButton" @click="menuCard = list.id;">Add another card</v-btn>
+                  <v-btn
+                    class="listButton"
+                    @drop.stop
+                    @dragover.stop
+                    @click="menuCard = list.id;"
+                  >Add another card</v-btn>
                 </template>
                 <v-card>
-                  <v-form ref="card" v-model="valid">
+                  <v-form ref="card">
                     <v-container grid-list-md>
                       <v-layout row wrap>
                         <v-flex>
@@ -68,7 +106,7 @@
                 <v-btn class="addListButton" color="#6a8bcc" dark v-on="on">Add another list</v-btn>
               </template>
               <v-card>
-                <v-form ref="list" v-model="valid">
+                <v-form ref="list">
                   <v-container grid-list-md>
                     <v-layout row wrap>
                       <v-flex>
@@ -83,7 +121,12 @@
                   </v-container>
                   <v-card-actions>
                     <v-spacer></v-spacer>
-                    <v-btn color="primary" flat :disabled="!valid" @click.prevent="addList">Add List</v-btn>
+                    <v-btn
+                      color="primary"
+                      flat
+                      :disabled="!listName"
+                      @click.prevent="addList"
+                    >Add List</v-btn>
                     <v-btn color="primary" flat @click="resetListPopup">Cancel</v-btn>
                   </v-card-actions>
                 </v-form>
@@ -93,27 +136,31 @@
         </div>
       </draggable>
     </div>
+    <CardModal :dialog="cardDialog" v-on:updateCardDialog="updateCardDialog"/>
   </div>
 </template>
 
 <script>
 import draggable from "vuedraggable";
+import CardModal from "./CardModal.vue";
 
 export default {
   data() {
     return {
-      valid: true,
       menuList: false,
       menuCard: false,
       listName: "",
       cardName: "",
+      listNameChangeId: 0,
+      cardDialog: false,
       nameRules: [v => !!v || "Title is required"],
       isDragging: false,
       delayedDragging: false
     };
   },
   components: {
-    draggable
+    draggable,
+    CardModal
   },
   computed: {
     selectedBoard() {
@@ -167,6 +214,37 @@ export default {
     resetListPopup() {
       this.$refs.list.reset();
       this.menuList = false;
+    },
+    drag(event) {
+      event.dataTransfer.setData("cardId", event.target.id);
+    },
+    drop(event, listId) {
+      var cardId = parseInt(event.dataTransfer.getData("cardId"));
+      let boardId = this.selectedBoard.id;
+      // event.target.appendChild(document.getElementById(data));
+      let data = {
+        cardId,
+        list: { listId },
+        boardId
+      };
+      this.$store.dispatch("card/patchCard", data);
+    },
+    changeListName(listId, listName) {
+      let boardId = this.selectedBoard.id;
+      let data = {
+        listId,
+        list: { listName },
+        boardId
+      };
+      this.$store.dispatch("list/patchList", data);
+      this.listNameChangeId = 0;
+    },
+    updateCardDialog(val) {
+      this.cardDialog = val;
+    },
+    showCardModal(cardId) {
+      this.$store.dispatch("card/getCardById", cardId);
+      this.cardDialog = true;
     }
   }
 };
@@ -213,6 +291,9 @@ export default {
   width: 92%;
 }
 .card {
-  margin: 5px 10px;
+  margin: 2px 10px;
+}
+.v-card__title {
+  margin: 2px 10px;
 }
 </style>
