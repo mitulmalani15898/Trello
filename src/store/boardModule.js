@@ -33,7 +33,7 @@ const board = {
         .catch(err => console.log(err))
     },
     patchBoard({ dispatch }, boardData) {
-      boardService.patchBoard(boardData.boardId, boardData.listId)
+      boardService.patchBoard(boardData.boardId, boardData.board)
         .then(res => {
           dispatch("board/getBoardById", boardData.boardId, { root: true });
         })

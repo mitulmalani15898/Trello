@@ -33,7 +33,7 @@
                         @click="showCardModal(card.id)"
                         :id="card.id.toString()"
                       >
-                        <v-card-title @drop.stop @dragover.stop>
+                        <v-card-title class="cardTitle" @drop.stop @dragover.stop>
                           <span>{{ card.cardName }}</span>
                         </v-card-title>
                         <!-- <v-card-text>"Turns out semicolon-less"</v-card-text> -->
@@ -293,7 +293,7 @@ export default {
 .card {
   margin: 2px 10px;
 }
-.v-card__title {
-  margin: 2px 10px;
+.cardTitle {
+  margin: 4px 10px;
 }
 </style>

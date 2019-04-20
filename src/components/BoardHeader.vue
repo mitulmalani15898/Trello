@@ -118,7 +118,7 @@ export default {
     },
     boardTeam: {
       get: function() {
-        return this.$store.state.board.selectedBoard.teamId === 1 
+        return this.$store.state.board.selectedBoard.teamId === 1
           ? "Personal"
           : this.getTeamNameById(this.$store.state.board.selectedBoard.teamId);
       },
@@ -169,7 +169,6 @@ export default {
           teamId
         }
       };
-      console.log(boardData)
       this.$store.dispatch("board/patchBoard", boardData);
       this.menuBoardTeam = false;
     },

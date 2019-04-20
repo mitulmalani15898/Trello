@@ -1,26 +1,53 @@
 <template>
   <v-layout row justify-center>
-    <v-dialog v-model="cardDialog" persistent max-width="700px">
+    <v-dialog v-model="cardDialog" persistent max-width="600px">
       <v-card>
-        <v-card-title v-if="selectedCard">
-          <span class="headline">{{ selectedCard.cardName }}</span>
+        <v-card-title v-if="selectedCard" class="modalTitle">
+          <span class="headline">
+            {{ selectedCard.cardName }}
+            <small style="color:black;">in</small>
+            <!-- {{ selectedCardList.listName }} -->
+          </span>
           <v-spacer></v-spacer>
-          <v-icon @click="cardDialog=false" color="black">mdi-close-circle</v-icon>
+          <v-icon @click="cardDialog=false" color="white">mdi-close-circle</v-icon>
         </v-card-title>
         <v-card-text>
           <v-container grid-list-md>
             <v-layout wrap>
-              <span class="headline">Description</span>
-              <br>
-              <button>Edit</button>
               <v-flex xs12 sm12 md12>
-                <v-textarea outline rows="2" auto-grow></v-textarea>
-                <v-btn class="vbutton" color="blue" flat @click="cardDialog = false">Save</v-btn>
+                <span class="headline">Description</span>&nbsp;&nbsp;
+                <button
+                  v-if="!showDescription"
+                  style="color:#026aa7;"
+                  @click="showDescription=true"
+                >Edit</button>
+                <v-textarea
+                  v-if="showDescription"
+                  outline
+                  rows="1"
+                  auto-grow
+                  :value="selectedCard.description"
+                ></v-textarea>  
+                <p v-if="!showDescription">{{ selectedCard.description }}</p>
+                <v-btn
+                  v-if="showDescription"
+                  class="vbutton"
+                  color="blue"
+                  flat
+                  @click="showDescription = false"
+                >Save</v-btn>
+                <v-btn
+                  v-if="showDescription"
+                  class="vbutton"
+                  color="blue"
+                  flat
+                  @click="showDescription = false"
+                >Cancel</v-btn>
               </v-flex>
-              <span class="headline">Add Comment</span>
               <v-flex xs12 sm12 md12>
-                <v-textarea outline rows="2" auto-grow></v-textarea>
-                <v-btn class="vbutton" color="blue" flat @click="cardDialog = false">Save</v-btn>
+                <span class="headline">Add Comment</span>
+                <v-textarea outline rows="1" auto-grow></v-textarea>
+                <v-btn class="vbutton" color="blue" flat @click=";">Save</v-btn>
               </v-flex>
             </v-layout>
           </v-container>
@@ -35,7 +62,7 @@ export default {
   props: ["dialog"],
   data() {
     return {
-      //
+      showDescription: false
     };
   },
   computed: {
@@ -70,6 +97,10 @@ export default {
 <style>
 .v-card__text {
   padding: 3px;
+}
+.modalTitle {
+  color: white;
+  background-color: #026aa7;
 }
 .v-textarea {
   margin: 10px;
