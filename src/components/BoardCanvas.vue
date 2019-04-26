@@ -33,10 +33,26 @@
                         @click="showCardModal(card.id)"
                         :id="card.id.toString()"
                       >
-                        <v-card-title class="cardTitle" @drop.stop @dragover.stop>
-                          <span>{{ card.cardName }}</span>
-                        </v-card-title>
-                        <!-- <v-card-text>"Turns out semicolon-less"</v-card-text> -->
+                        <v-card-text class="cardTitle">
+                          <p style="margin-bottom:2px;">
+                            {{ card.cardName }}
+                            <v-icon
+                              small
+                              style="float:right; margin-right:20px;"
+                              @click=";"
+                            >mdi-pencil</v-icon>
+                          </p>
+                          <div v-if="card.Comments.length" style="display:inline;">
+                            <v-icon small>mdi-comment-text-outline</v-icon>
+                            <span style="font-size:13px;">{{ card.Comments.length }}</span>
+                          </div>
+                          <div v-if="card.Comments.length" style="display:inline;margin-left:5px;">
+                            <v-icon small>mdi-checkbox-multiple-marked-outline</v-icon>
+                            <span
+                              style="font-size:13px;"
+                            >{{ card.Comments.length +"/"+ card.Comments.length}}</span>
+                          </div>
+                        </v-card-text>
                       </v-card>
                     </v-flex>
                   </v-layout>
@@ -224,7 +240,7 @@ export default {
       // event.target.appendChild(document.getElementById(data));
       let data = {
         cardId,
-        list: { listId },
+        change: { listId },
         boardId
       };
       this.$store.dispatch("card/patchCard", data);
@@ -291,7 +307,7 @@ export default {
   width: 92%;
 }
 .card {
-  margin: 2px 10px;
+  margin: 8px 10px;
 }
 .cardTitle {
   margin: 4px 10px;

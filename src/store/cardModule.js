@@ -20,8 +20,9 @@ const card = {
         .catch(err => err.response.data.error)
     },
     patchCard({ dispatch }, cardData) {
-      cardService.patchCard(cardData.cardId, cardData.list)
+      cardService.patchCard(cardData.cardId, cardData.change)
         .then(res => {
+          dispatch('card/getCardById', cardData.cardId, { root: true });
           dispatch("board/getBoardById", cardData.boardId, { root: true });
         })
         .catch(err => console.log(err))
