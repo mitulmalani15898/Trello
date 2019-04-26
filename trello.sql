@@ -84,6 +84,59 @@ INSERT INTO `card` VALUES (14,10,'hiii','fgfgdg',0,'2019-04-17 13:15:20',0,'2019
 UNLOCK TABLES;
 
 --
+-- Table structure for table `checklist`
+--
+
+DROP TABLE IF EXISTS `checklist`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `checklist` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `cardId` int(11) DEFAULT NULL,
+  `checkListName` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `cardId_idx` (`cardId`),
+  CONSTRAINT `cardId1` FOREIGN KEY (`cardId`) REFERENCES `card` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `checklist`
+--
+
+LOCK TABLES `checklist` WRITE;
+/*!40000 ALTER TABLE `checklist` DISABLE KEYS */;
+/*!40000 ALTER TABLE `checklist` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `checklistitem`
+--
+
+DROP TABLE IF EXISTS `checklistitem`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `checklistitem` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `checkListId` int(11) DEFAULT NULL,
+  `checkListItemName` varchar(255) DEFAULT NULL,
+  `completed` tinyint(1) DEFAULT '0',
+  PRIMARY KEY (`id`),
+  KEY `checkListId_idx` (`checkListId`),
+  CONSTRAINT `checkListId` FOREIGN KEY (`checkListId`) REFERENCES `checklist` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `checklistitem`
+--
+
+LOCK TABLES `checklistitem` WRITE;
+/*!40000 ALTER TABLE `checklistitem` DISABLE KEYS */;
+/*!40000 ALTER TABLE `checklistitem` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `comment`
 --
 
@@ -215,4 +268,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-04-26 19:34:34
+-- Dump completed on 2019-04-26 21:04:16
