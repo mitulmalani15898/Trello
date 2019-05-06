@@ -24,7 +24,7 @@
               <button class="board-tile" style="color:#696969;" @click="toggleBoardDialog">
                 <span class="board-tile-fade" style="background-color:#D3D3D3"></span>
                 <div class="board-tile-details">
-                  <div class="board-tile-details-name">Create Board</div>
+                  <div class="board-tile-details-name">Create Board...</div>
                 </div>
               </button>
             </li>
@@ -53,7 +53,7 @@
                 <button class="board-tile" style="color:#696969;" @click="toggleBoardDialog">
                   <span class="board-tile-fade" style="background-color:#D3D3D3"></span>
                   <div class="board-tile-details">
-                    <div class="board-tile-details-name">Create Board</div>
+                    <div class="board-tile-details-name">Create Board...</div>
                   </div>
                 </button>
               </li>
@@ -86,7 +86,7 @@ export default {
   },
   computed: {
     privateBoards() {
-      return this.$store.state.user.user["Boards"];
+      return this.$store.state.user.user.Boards;
     },
     teamBoards() {
       return this.$store.state.team.userTeams;

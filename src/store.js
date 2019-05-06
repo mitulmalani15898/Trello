@@ -11,6 +11,7 @@ import board from './store/boardModule'
 import user from './store/userModule'
 import list from './store/listModule'
 import card from './store/cardModule'
+import comment from './store/commentModule'
 
 Vue.use(Vuex)
 
@@ -23,7 +24,8 @@ export default new Vuex.Store({
     board,
     user,
     list,
-    card
+    card,
+    comment
   },
   mutations,
   state

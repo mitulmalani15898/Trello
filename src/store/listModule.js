@@ -18,6 +18,13 @@ const list = {
           dispatch("board/getBoardById", list.boardId, { root: true });
         })
         .catch(err => err.response.data.error)
+    },
+    patchList({ dispatch }, listData) {
+      listService.patchList(listData.listId, listData.list)
+        .then(res => {
+          dispatch("board/getBoardById", listData.boardId, { root: true });
+        })
+        .catch(err => console.log(err))
     }
   }
 }
