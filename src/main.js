@@ -13,7 +13,7 @@ Vue.use(Vuetify, {
   iconfont: 'mdi'
 })
 
-axios.defaults.baseURL = 'http://192.168.200.28:8087/'
+axios.defaults.baseURL = 'http://192.168.2.2:8087/'
 
 new Vue({
   router,
