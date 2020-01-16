@@ -3,4 +3,4 @@ export default {
   userId: null,
   userName: null,
   authError: null
-}
+};

@@ -12,11 +12,12 @@ const user = {
   },
   actions: {
     getUserByUserId({ commit }, userId) {
-      userService.getUserByUserId(userId)
-        .then(res => commit('setUser', res.data))
-        .catch(err => err.response.data.error)
+      userService
+        .getUserByUserId(userId)
+        .then(res => commit("setUser", res.data))
+        .catch(err => err.response.data.error);
     }
   }
-}
+};
 
 export default user;

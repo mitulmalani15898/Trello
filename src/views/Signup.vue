@@ -1,24 +1,37 @@
+/* eslint-disable */
 <template>
   <v-app>
     <v-content>
       <v-container fluid>
         <v-layout justify-center>
           <v-flex xs12 sm6 md4 lg4 xl4 class="box">
-            <p style="font-size:38px; font-weight:bold;">Create a Trello Account</p>
+            <p style="font-size:38px; font-weight:bold;">
+              Create a Trello Account
+            </p>
             <span style="font-size:18px;">
               or
-              <router-link to="login" style="text-decoration: underline;">sign in to your account</router-link>
+              <router-link to="login" style="text-decoration: underline;">
+                sign in to your account
+              </router-link>
             </span>
             <div style="margin-top:21px;">
               <center>
                 <div
                   v-if="authError"
                   style="color:red; font-size:15px; margin-bottom:10px;"
-                >{{authError}}</div>
+                >
+                  {{ authError }}
+                </div>
               </center>
               <v-form ref="form" v-model="valid">
                 <v-flex>
-                  <v-text-field label="Name" type="text" v-model="name" :rules="nameRules" outline></v-text-field>
+                  <v-text-field
+                    label="Name"
+                    type="text"
+                    v-model="name"
+                    :rules="nameRules"
+                    outline
+                  ></v-text-field>
                 </v-flex>
                 <v-flex>
                   <v-text-field
@@ -36,23 +49,34 @@
                     :type="show ? 'text' : 'password'"
                     v-model="password"
                     :rules="passwordRules"
-                     @click:append="show = !show"
+                    @click:append="show = !show"
                     outline
                   ></v-text-field>
                 </v-flex>
               </v-form>
             </div>
-            <input class="btn" type="submit" @click.prevent="signUp" value="Create New Account">
+            <input
+              class="btn"
+              type="submit"
+              @click.prevent="signUp"
+              value="Create New Account"
+            />
             <div class="btn1">
               <span>
-                <img src="../../public/google.jpg">
-              </span>&nbsp;&nbsp;
+                <img src="../../public/google.jpg" />
+              </span>
+              &nbsp;&nbsp;
               <label>Sign up with Google</label>
             </div>
             <div style="margin-top:40px; font-size:18px;">
               By creating an account, you agree to our
-              <router-link to style="text-decoration: underline;">Terms of Services</router-link>&nbsp;and
-              <router-link to style="text-decoration: underline;">Privacy Policy</router-link>
+              <router-link to style="text-decoration: underline;">
+                Terms of Services
+              </router-link>
+              &nbsp;and
+              <router-link to style="text-decoration: underline;">
+                Privacy Policy
+              </router-link>
             </div>
           </v-flex>
         </v-layout>
@@ -80,7 +104,7 @@ export default {
       emailRules: [
         v => !!v || "E-mail is required",
         v =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid"
       ]
     };
@@ -108,8 +132,6 @@ export default {
   }
 };
 </script>
-
-
 <style>
 .box {
   margin-top: 50px;

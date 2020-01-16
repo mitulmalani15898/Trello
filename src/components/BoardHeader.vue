@@ -2,10 +2,17 @@
   <div>
     <div class="boardHeader">
       <div class="text-xs-center">
-        <v-menu v-model="menuBoardName" :close-on-content-click="false" :nudge-width="100" offset-x>
+        <v-menu
+          v-model="menuBoardName"
+          :close-on-content-click="false"
+          :nudge-width="100"
+          offset-x
+        >
           <template v-slot:activator="{ on }">
             <div class="board-header-btn board-header-btn-name">
-              <button class="board-header-btn-text" v-on="on">{{ boardName }}</button>
+              <button class="board-header-btn-text" v-on="on">
+                {{ boardName }}
+              </button>
             </div>
           </template>
           <v-card>
@@ -13,14 +20,26 @@
               <v-container grid-list-md>
                 <v-layout row wrap>
                   <v-flex>
-                    <v-text-field label="Board Title" v-model="boardName" outline></v-text-field>
+                    <v-text-field
+                      label="Board Title"
+                      v-model="boardName"
+                      outline
+                    ></v-text-field>
                   </v-flex>
                 </v-layout>
               </v-container>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" flat @click="updateBoardName()">Update</v-btn>
-                <v-btn color="primary" flat @click="menuBoardName = !menuBoardName">Cancel</v-btn>
+                <v-btn color="primary" flat @click="updateBoardName()">
+                  Update
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  flat
+                  @click="menuBoardName = !menuBoardName"
+                >
+                  Cancel
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
@@ -28,23 +47,43 @@
       </div>
       <span class="board-header-btn-divider"></span>
       <div class="text-xs-center">
-        <v-menu v-model="menuBoardTeam" :close-on-content-click="false" :nudge-width="100" offset-x>
+        <v-menu
+          v-model="menuBoardTeam"
+          :close-on-content-click="false"
+          :nudge-width="100"
+          offset-x
+        >
           <template v-slot:activator="{ on }">
-            <button class="board-header-btn board-header-btn-text" v-on="on">{{ boardTeam }}</button>
+            <button class="board-header-btn board-header-btn-text" v-on="on">
+              {{ boardTeam }}
+            </button>
           </template>
           <v-card>
             <v-form ref="boardTeam">
               <v-container grid-list-md>
                 <v-layout row wrap>
                   <v-flex>
-                    <v-select :items="teamNames" v-model="boardTeam" label="Team" outline></v-select>
+                    <v-select
+                      :items="teamNames"
+                      v-model="boardTeam"
+                      label="Team"
+                      outline
+                    ></v-select>
                   </v-flex>
                 </v-layout>
               </v-container>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" flat @click="updateBoardTeam()">Update</v-btn>
-                <v-btn color="primary" flat @click="menuBoardTeam = !menuBoardTeam">Cancel</v-btn>
+                <v-btn color="primary" flat @click="updateBoardTeam()">
+                  Update
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  flat
+                  @click="menuBoardTeam = !menuBoardTeam"
+                >
+                  Cancel
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
@@ -59,21 +98,36 @@
           offset-x
         >
           <template v-slot:activator="{ on }">
-            <button class="board-header-btn board-header-btn-text" v-on="on">{{ boardScope }}</button>
+            <button class="board-header-btn board-header-btn-text" v-on="on">
+              {{ boardScope }}
+            </button>
           </template>
           <v-card>
             <v-form ref="boardScope">
               <v-container grid-list-md>
                 <v-layout row wrap>
                   <v-flex>
-                    <v-select :items="items" v-model="boardScope" label="Scope" outline></v-select>
+                    <v-select
+                      :items="items"
+                      v-model="boardScope"
+                      label="Scope"
+                      outline
+                    ></v-select>
                   </v-flex>
                 </v-layout>
               </v-container>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" flat @click="updateBoardScope()">Update</v-btn>
-                <v-btn color="primary" flat @click="menuBoardScope = !menuBoardScope">Cancel</v-btn>
+                <v-btn color="primary" flat @click="updateBoardScope()">
+                  Update
+                </v-btn>
+                <v-btn
+                  color="primary"
+                  flat
+                  @click="menuBoardScope = !menuBoardScope"
+                >
+                  Cancel
+                </v-btn>
               </v-card-actions>
             </v-form>
           </v-card>
@@ -190,7 +244,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 .boardHeader {

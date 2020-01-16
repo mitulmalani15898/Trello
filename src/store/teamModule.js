@@ -1,4 +1,4 @@
-import teamService from '../service/team'
+import teamService from "../service/team";
 
 const team = {
   namespaced: true,
@@ -16,19 +16,21 @@ const team = {
   },
   actions: {
     postTeam({ dispatch, commit }, team) {
-      teamService.postTeam(team)
+      teamService
+        .postTeam(team)
         .then(res => {
-          commit('setTeams', res.data)
-          dispatch('getTeamsByUserId', team.userId)
+          commit("setTeams", res.data);
+          dispatch("getTeamsByUserId", team.userId);
         })
-        .catch(err => err.response.data.error)
+        .catch(err => err.response.data.error);
     },
     getTeamsByUserId({ commit }, userId) {
-      teamService.getTeamsByUserId(userId)
-        .then(res => commit('setUserTeams', res.data))
-        .catch(err => err.response.data.error)
+      teamService
+        .getTeamsByUserId(userId)
+        .then(res => commit("setUserTeams", res.data))
+        .catch(err => err.response.data.error);
     }
   }
-}
+};
 
 export default team;

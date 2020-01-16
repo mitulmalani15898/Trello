@@ -1,7 +1,7 @@
-import axios from 'axios';
+import axios from "axios";
 
 export default {
   getUserByUserId(userId) {
-    return axios.get('api/user/' + userId);
+    return axios.get("api/user/" + userId);
   }
-}
+};

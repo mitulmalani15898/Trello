@@ -7,14 +7,18 @@
             <p style="font-size:38px; font-weight:bold;">Log in to Trello</p>
             <span style="font-size:18px;">
               or
-              <router-link to="signup" style="text-decoration: underline;">create an account</router-link>
+              <router-link to="signup" style="text-decoration: underline;">
+                create an account
+              </router-link>
             </span>
             <div style="margin-top:21px;">
               <center>
                 <div
                   v-if="authError"
                   style="color:red; font-size:15px; margin-bottom:10px;"
-                >{{authError}}</div>
+                >
+                  {{ authError }}
+                </div>
               </center>
               <v-form ref="form" v-model="valid">
                 <v-flex>
@@ -36,15 +40,23 @@
                 ></v-text-field>
               </v-form>
             </div>
-            <input class="btn" type="submit" @click.prevent="logIn" value="Log In">
+            <input
+              class="btn"
+              type="submit"
+              @click.prevent="logIn"
+              value="Log In"
+            />
             <div class="btn1">
               <span>
-                <img src="../../public/google.jpg">
-              </span>&nbsp;&nbsp;
+                <img src="../../public/google.jpg" />
+              </span>
+              &nbsp;&nbsp;
               <label>Log in with Google</label>
             </div>
             <div style="margin-top:40px; font-size:18px;">
-              <router-link to style="text-decoration: underline;">Forgot your Password?</router-link>
+              <router-link to style="text-decoration: underline;">
+                Forgot your Password?
+              </router-link>
             </div>
           </v-flex>
         </v-layout>
@@ -70,7 +82,7 @@ export default {
       emailRules: [
         v => !!v || "E-mail is required",
         v =>
-          /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
+          /^\w+([\\.-]?\w+)*@\w+([\\.-]?\w+)*(\.\w{2,3})+$/.test(v) ||
           "E-mail must be valid"
       ]
     };
@@ -97,7 +109,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 .box {

@@ -1,15 +1,15 @@
 export default {
   authenticatedUser(state, data) {
-    state.token = data.token,
-      state.userName = data.userName,
-      state.userId = data.userId
+    (state.token = data.token),
+      (state.userName = data.userName),
+      (state.userId = data.userId);
   },
 
   clearAuthData(state) {
-    state.token = null,
-      state.userName = null,
-      state.userId = null,
-      state.authError = null
+    (state.token = null),
+      (state.userName = null),
+      (state.userId = null),
+      (state.authError = null);
   },
 
   setAuthError(state, err) {
@@ -19,4 +19,4 @@ export default {
   clearAuthError(state) {
     state.authError = null;
   }
-}
+};

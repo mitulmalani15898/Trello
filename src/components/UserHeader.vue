@@ -7,9 +7,14 @@
       <v-btn flat class="btnBoard" @click="redirectToDashboard">
         <span>Boards</span>
       </v-btn>
-      <input class="header-search-input" placeholder="Search...">
+      <input class="header-search-input" placeholder="Search..." />
       <v-spacer></v-spacer>
-      <img src="../../public/trello-logo-white.svg" alt="Trello" width="130px" height="28px">
+      <img
+        src="../../public/trello-logo-white.svg"
+        alt="Trello"
+        width="130px"
+        height="28px"
+      />
       <v-spacer></v-spacer>
       <v-btn icon class="btnBoard">
         <v-menu bottom origin="center center">
@@ -51,8 +56,11 @@
         </v-menu>
       </v-btn>
     </v-toolbar>
-    <AddBoard :dialog="boardDialog" v-on:updateBoardDialog="updateBoardDialog"/>
-    <AddTeam :dialog="teamDialog" @updateTeamDialog="updateTeamDialog"/>
+    <AddBoard
+      :dialog="boardDialog"
+      v-on:updateBoardDialog="updateBoardDialog"
+    />
+    <AddTeam :dialog="teamDialog" @updateTeamDialog="updateTeamDialog" />
   </div>
 </template>
 
@@ -115,4 +123,3 @@ export default {
   z-index: 1;
 }
 </style>
-

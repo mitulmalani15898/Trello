@@ -10,20 +10,37 @@
             <v-container grid-list-md>
               <v-layout row wrap>
                 <v-flex xs12 sm12 md12>
-                  <v-text-field label="Board Title" v-model="boardName" :rules="nameRules" outline></v-text-field>
+                  <v-text-field
+                    label="Board Title"
+                    v-model="boardName"
+                    :rules="nameRules"
+                    outline
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12 sm12 md12>
-                  <v-select :items="teamNames" v-model="team" label="Team" outline></v-select>
+                  <v-select
+                    :items="teamNames"
+                    v-model="team"
+                    label="Team"
+                    outline
+                  ></v-select>
                 </v-flex>
                 <v-flex xs12 sm12 md12>
-                  <v-select :items="items" v-model="boardScope" label="Scope" outline></v-select>
+                  <v-select
+                    :items="items"
+                    v-model="boardScope"
+                    label="Scope"
+                    outline
+                  ></v-select>
                 </v-flex>
               </v-layout>
             </v-container>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue" flat :disabled="!valid" @click="createBoard">Create</v-btn>
+            <v-btn color="blue" flat :disabled="!valid" @click="createBoard">
+              Create
+            </v-btn>
             <v-btn color="blue" flat @click="boardDialog = false">Close</v-btn>
           </v-card-actions>
         </v-form>

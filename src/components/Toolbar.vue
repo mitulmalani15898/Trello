@@ -1,9 +1,14 @@
 <template>
   <v-toolbar class="toolbar">
-    <img src="../../public/trello-logo-white.svg" alt="Trello" width="130px" height="40px">
+    <img
+      src="../../public/trello-logo-white.svg"
+      alt="Trello"
+      width="130px"
+      height="40px"
+    />
     <v-spacer></v-spacer>
-    <v-btn flat to='/login' class="loginButton">Log In</v-btn>
-    <v-btn flat to='/signup' class="signupButton">Sign Up</v-btn>
+    <v-btn flat to="/login" class="loginButton">Log In</v-btn>
+    <v-btn flat to="/signup" class="signupButton">Sign Up</v-btn>
   </v-toolbar>
 </template>
 
@@ -11,8 +16,8 @@
 export default {};
 </script>
 
-<style> 
-.v-toolbar__content{
+<style>
+.v-toolbar__content {
   padding: 0px !important;
   height: 40px !important;
 }
@@ -40,4 +45,3 @@ export default {};
   cursor: pointer;
 }
 </style>
-

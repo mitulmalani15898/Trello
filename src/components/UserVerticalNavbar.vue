@@ -6,11 +6,13 @@
       </p>
       <ul class="ul">
         <li class="li">
-          <button class="anchorNav" @click="boardDialog = !boardDialog">Create a Board</button>
+          <button class="anchorNav" @click="boardDialog = !boardDialog">
+            Create a Board
+          </button>
         </li>
       </ul>
-      <hr>
-      <br>
+      <hr />
+      <br />
       <ul class="ul">
         <li class="li">
           <button class="anchorNav">Boards</button>
@@ -19,19 +21,24 @@
           <button class="anchorNav">Home</button>
         </li>
       </ul>
-      <hr>
-      <br>
+      <hr />
+      <br />
       <p style="margin-left:30px; margin-bottom:10px;">
         <b>Teams</b>
       </p>
       <ul class="ul">
         <li class="li">
-          <button class="anchorNav" @click="teamDialog = !teamDialog">Create a Team</button>
+          <button class="anchorNav" @click="teamDialog = !teamDialog">
+            Create a Team
+          </button>
         </li>
       </ul>
     </div>
-    <AddBoard :dialog="boardDialog" v-on:updateBoardDialog="updateBoardDialog"/>
-    <AddTeam :dialog="teamDialog" @updateTeamDialog="updateTeamDialog"/>
+    <AddBoard
+      :dialog="boardDialog"
+      v-on:updateBoardDialog="updateBoardDialog"
+    />
+    <AddTeam :dialog="teamDialog" @updateTeamDialog="updateTeamDialog" />
   </div>
 </template>
 
@@ -92,4 +99,3 @@ export default {
   margin-bottom: 4px;
 }
 </style>
-

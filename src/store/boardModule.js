@@ -1,4 +1,4 @@
-import boardService from '../service/board'
+import boardService from "../service/board";
 
 const board = {
   namespaced: true,
@@ -19,27 +19,30 @@ const board = {
   },
   actions: {
     postBoard({ dispatch, commit }, board) {
-      boardService.postBoard(board)
+      boardService
+        .postBoard(board)
         .then(res => {
-          commit('setBoards', res.data);
+          commit("setBoards", res.data);
           dispatch("user/getUserByUserId", board.userId, { root: true });
           dispatch("team/getTeamsByUserId", board.userId, { root: true });
         })
-        .catch(err => err.response.data.error)
+        .catch(err => err.response.data.error);
     },
     getBoardById({ commit }, boardId) {
-      boardService.getBoardById(boardId)
-        .then(res => commit('setSelectedBoard', res.data))
-        .catch(err => console.log(err))
+      boardService
+        .getBoardById(boardId)
+        .then(res => commit("setSelectedBoard", res.data))
+        .catch(err => err);
     },
     patchBoard({ dispatch }, boardData) {
-      boardService.patchBoard(boardData.boardId, boardData.board)
-        .then(res => {
+      boardService
+        .patchBoard(boardData.boardId, boardData.board)
+        .then(() => {
           dispatch("board/getBoardById", boardData.boardId, { root: true });
         })
-        .catch(err => console.log(err))
+        .catch(err => err);
     }
   }
-}
+};
 
 export default board;

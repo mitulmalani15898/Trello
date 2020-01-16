@@ -1,11 +1,16 @@
 <template>
   <div class="allBoards">
-    <AddBoard :dialog="boardDialog" v-on:updateBoardDialog="updateBoardDialog"/>
+    <AddBoard
+      :dialog="boardDialog"
+      v-on:updateBoardDialog="updateBoardDialog"
+    />
     <div style="position: sticky;">
       <div>
         <div class="boards-page-board-section">
           <div class="boards-page-board-section-header">
-            <h3 class="boards-page-board-section-header-name">Personal Boards</h3>
+            <h3 class="boards-page-board-section-header-name">
+              Personal Boards
+            </h3>
           </div>
           <ul class="boards-page-board-section-list">
             <li
@@ -16,13 +21,22 @@
               <button class="board-tile" @click="displayBoardView(board.id)">
                 <span class="board-tile-fade"></span>
                 <div class="board-tile-details">
-                  <div class="board-tile-details-name">{{ board.boardName }}</div>
+                  <div class="board-tile-details-name">
+                    {{ board.boardName }}
+                  </div>
                 </div>
               </button>
             </li>
             <li class="boards-page-board-section-list-item">
-              <button class="board-tile" style="color:#696969;" @click="toggleBoardDialog">
-                <span class="board-tile-fade" style="background-color:#D3D3D3"></span>
+              <button
+                class="board-tile"
+                style="color:#696969;"
+                @click="toggleBoardDialog"
+              >
+                <span
+                  class="board-tile-fade"
+                  style="background-color:#D3D3D3"
+                ></span>
                 <div class="board-tile-details">
                   <div class="board-tile-details-name">Create Board...</div>
                 </div>
@@ -34,7 +48,9 @@
         <div class="boards-page-board-section">
           <div v-for="team in teamBoards" :key="team.id">
             <div class="boards-page-board-section-header">
-              <h3 class="boards-page-board-section-header-name">{{team.teamName}}</h3>
+              <h3 class="boards-page-board-section-header-name">
+                {{ team.teamName }}
+              </h3>
             </div>
             <ul class="boards-page-board-section-list">
               <li
@@ -45,13 +61,22 @@
                 <button class="board-tile" @click="displayBoardView(board.id)">
                   <span class="board-tile-fade"></span>
                   <div class="board-tile-details">
-                    <div class="board-tile-details-name">{{ board.boardName }}</div>
+                    <div class="board-tile-details-name">
+                      {{ board.boardName }}
+                    </div>
                   </div>
                 </button>
               </li>
               <li class="boards-page-board-section-list-item">
-                <button class="board-tile" style="color:#696969;" @click="toggleBoardDialog">
-                  <span class="board-tile-fade" style="background-color:#D3D3D3"></span>
+                <button
+                  class="board-tile"
+                  style="color:#696969;"
+                  @click="toggleBoardDialog"
+                >
+                  <span
+                    class="board-tile-fade"
+                    style="background-color:#D3D3D3"
+                  ></span>
                   <div class="board-tile-details">
                     <div class="board-tile-details-name">Create Board...</div>
                   </div>
@@ -105,7 +130,6 @@ export default {
   }
 };
 </script>
-
 
 <style>
 .allBoards {

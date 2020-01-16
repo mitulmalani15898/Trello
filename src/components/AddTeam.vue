@@ -10,7 +10,12 @@
             <v-container grid-list-md>
               <v-layout row wrap>
                 <v-flex xs12 sm12 md12>
-                  <v-text-field label="Team Name" v-model="teamName" :rules="nameRules" outline></v-text-field>
+                  <v-text-field
+                    label="Team Name"
+                    v-model="teamName"
+                    :rules="nameRules"
+                    outline
+                  ></v-text-field>
                 </v-flex>
                 <v-flex xs12>
                   <v-textarea
@@ -27,7 +32,9 @@
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
-            <v-btn color="blue" flat :disabled="!valid" @click="createTeam">Create</v-btn>
+            <v-btn color="blue" flat :disabled="!valid" @click="createTeam">
+              Create
+            </v-btn>
             <v-btn color="blue" flat @click="teamDialog = false">Close</v-btn>
           </v-card-actions>
         </v-form>

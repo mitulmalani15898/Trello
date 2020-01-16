@@ -1,8 +1,8 @@
 <template>
   <div class="board">
-    <UserHeader/>
-    <BoardHeader/>
-    <BoardCanvas/>
+    <UserHeader />
+    <BoardHeader />
+    <BoardCanvas />
   </div>
 </template>
 
@@ -33,4 +33,3 @@ export default {
   background-color: rgb(192, 215, 247);
 }
 </style>
-

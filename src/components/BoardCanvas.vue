@@ -1,8 +1,12 @@
 <template>
   <div class="boardCanvas">
     <div id="board">
-      <draggable v-model="boardLists" @start="isDragging=true" @end="isDragging=false">
-        <div v-for="(list) in boardLists" :key="list.id" class="list-wrapper">
+      <draggable
+        v-model="boardLists"
+        @start="isDragging = true"
+        @end="isDragging = false"
+      >
+        <div v-for="list in boardLists" :key="list.id" class="list-wrapper">
           <div class="list" @drop.stop @dragover.stop>
             <v-text-field
               style="padding-left:15px;padding-right:15px;"
@@ -16,12 +20,22 @@
               @drop.stop
               @dragover.stop
               @click="listNameChangeId = list.id"
-            >{{ list.listName }}</v-btn>
+            >
+              {{ list.listName }}
+            </v-btn>
 
-            <div @drop.prevent="drop($event,list.id)" @dragover.prevent>
+            <div @drop.prevent="drop($event, list.id)" @dragover.prevent>
               <div v-if="list.Cards.length != 0">
-                <draggable :v-model="list" @start="isDragging=true" @end="isDragging=false">
-                  <v-layout v-for="card in list.Cards" :key="card.id" class="card">
+                <draggable
+                  :v-model="list"
+                  @start="isDragging = true"
+                  @end="isDragging = false"
+                >
+                  <v-layout
+                    v-for="card in list.Cards"
+                    :key="card.id"
+                    class="card"
+                  >
                     <v-flex @drop.stop @dragover.stop>
                       <v-card
                         class="mx-auto"
@@ -39,18 +53,33 @@
                             <v-icon
                               small
                               style="float:right; margin-right:20px;"
-                              @click=";"
-                            >mdi-pencil</v-icon>
+                            >
+                              mdi-pencil
+                            </v-icon>
                           </p>
-                          <div v-if="card.Comments.length" style="display:inline;">
+                          <div
+                            v-if="card.Comments.length"
+                            style="display:inline;"
+                          >
                             <v-icon small>mdi-comment-text-outline</v-icon>
-                            <span style="font-size:13px;">{{ card.Comments.length }}</span>
+                            <span style="font-size:13px;">
+                              {{ card.Comments.length }}
+                            </span>
                           </div>
-                          <div v-if="card.Comments.length" style="display:inline;margin-left:5px;">
-                            <v-icon small>mdi-checkbox-multiple-marked-outline</v-icon>
-                            <span
-                              style="font-size:13px;"
-                            >{{ card.Comments.length +"/"+ card.Comments.length}}</span>
+                          <div
+                            v-if="card.Comments.length"
+                            style="display:inline;margin-left:5px;"
+                          >
+                            <v-icon small>
+                              mdi-checkbox-multiple-marked-outline
+                            </v-icon>
+                            <span style="font-size:13px;">
+                              {{
+                                card.Comments.length +
+                                  "/" +
+                                  card.Comments.length
+                              }}
+                            </span>
                           </div>
                         </v-card-text>
                       </v-card>
@@ -61,7 +90,7 @@
               <div
                 style="height:10px;"
                 v-else
-                @drop.prevent="drop($event,list.id)"
+                @drop.prevent="drop($event, list.id)"
                 @dragover.prevent
               ></div>
             </div>
@@ -75,20 +104,26 @@
                 origin="center center"
                 transition="scale-transition"
               >
-                <template v-slot:activator="{ on }">
+                <template>
                   <v-btn
                     class="listButton"
                     @drop.stop
                     @dragover.stop
-                    @click="menuCard = list.id;"
-                  >Add another card</v-btn>
+                    @click="menuCard = list.id"
+                  >
+                    Add another card
+                  </v-btn>
                 </template>
                 <v-card>
                   <v-form ref="card">
                     <v-container grid-list-md>
                       <v-layout row wrap>
                         <v-flex>
-                          <v-text-field label="Card Title" v-model="cardName" outline></v-text-field>
+                          <v-text-field
+                            label="Card Title"
+                            v-model="cardName"
+                            outline
+                          ></v-text-field>
                         </v-flex>
                       </v-layout>
                     </v-container>
@@ -99,8 +134,12 @@
                         flat
                         :disabled="!cardName"
                         @click.prevent="addCard(list.id)"
-                      >Add Card</v-btn>
-                      <v-btn color="primary" flat @click="resetCardPopup">Cancel</v-btn>
+                      >
+                        Add Card
+                      </v-btn>
+                      <v-btn color="primary" flat @click="resetCardPopup">
+                        Cancel
+                      </v-btn>
                     </v-card-actions>
                   </v-form>
                 </v-card>
@@ -119,7 +158,9 @@
               transition="scale-transition"
             >
               <template v-slot:activator="{ on }">
-                <v-btn class="addListButton" color="#6a8bcc" dark v-on="on">Add another list</v-btn>
+                <v-btn class="addListButton" color="#6a8bcc" dark v-on="on">
+                  Add another list
+                </v-btn>
               </template>
               <v-card>
                 <v-form ref="list">
@@ -142,8 +183,12 @@
                       flat
                       :disabled="!listName"
                       @click.prevent="addList"
-                    >Add List</v-btn>
-                    <v-btn color="primary" flat @click="resetListPopup">Cancel</v-btn>
+                    >
+                      Add List
+                    </v-btn>
+                    <v-btn color="primary" flat @click="resetListPopup">
+                      Cancel
+                    </v-btn>
                   </v-card-actions>
                 </v-form>
               </v-card>
@@ -152,7 +197,7 @@
         </div>
       </draggable>
     </div>
-    <CardModal :dialog="cardDialog" v-on:updateCardDialog="updateCardDialog"/>
+    <CardModal :dialog="cardDialog" v-on:updateCardDialog="updateCardDialog" />
   </div>
 </template>
 

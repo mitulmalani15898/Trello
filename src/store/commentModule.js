@@ -1,4 +1,4 @@
-import commentService from '../service/comment'
+import commentService from "../service/comment";
 
 const comment = {
   namespaced: true,
@@ -12,31 +12,34 @@ const comment = {
   },
   actions: {
     postComment({ dispatch, commit }, comment) {
-      commentService.postComment(comment)
+      commentService
+        .postComment(comment)
         .then(res => {
-          commit('setComment', res.data);
-          dispatch('card/getCardById', comment.cardId, { root: true });
+          commit("setComment", res.data);
+          dispatch("card/getCardById", comment.cardId, { root: true });
           dispatch("board/getBoardById", comment.boardId, { root: true });
         })
-        .catch(err => console.log(err))
+        .catch(err => err);
     },
     patchComment({ dispatch }, commentData) {
-      commentService.patchComment(commentData.commentId, commentData.change)
-        .then(res => {
-          dispatch('card/getCardById', commentData.cardId, { root: true });
+      commentService
+        .patchComment(commentData.commentId, commentData.change)
+        .then(() => {
+          dispatch("card/getCardById", commentData.cardId, { root: true });
           dispatch("board/getBoardById", commentData.boardId, { root: true });
         })
-        .catch(err => console.log(err))
+        .catch(err => err);
     },
     deleteComment({ dispatch }, commentData) {
-      commentService.deleteComment(commentData.commentId)
-        .then(res => {
-          dispatch('card/getCardById', commentData.cardId, { root: true });
+      commentService
+        .deleteComment(commentData.commentId)
+        .then(() => {
+          dispatch("card/getCardById", commentData.cardId, { root: true });
           dispatch("board/getBoardById", commentData.boardId, { root: true });
         })
-        .catch(err => console.log(err))
+        .catch(err => err);
     }
   }
-}
+};
 
 export default comment;

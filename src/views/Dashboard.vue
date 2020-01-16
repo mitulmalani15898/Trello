@@ -1,8 +1,8 @@
 <template>
   <div>
-    <UserHeader/>
-    <UserVerticalNavbar/>
-    <DisplayBoards/>
+    <UserHeader />
+    <UserVerticalNavbar />
+    <DisplayBoards />
   </div>
 </template>
 
